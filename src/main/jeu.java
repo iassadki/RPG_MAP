@@ -1,8 +1,6 @@
 package main;
 
-import entity.Entity;
-import entity.Monster;
-import entity.Player;
+import entity.*;
 import weapons.*;
 import zone.WeaponStore;
 
@@ -18,11 +16,20 @@ public class jeu {
         Monster m1 = new Monster("Monster 1");
         Monster m2 = new Monster("Monster 2");
         Monster m3 = new Monster("Monster 3");
+        // Weapon awe = new Axe();
+        //Axe axe = new Axe();
+        //Hammer hammer = new Hammer();
+        //Bow bow = new Bow();
         // Elf elf = new Elf("Elf");
         // Sorcerer sorcerer = new Sorcerer("Sorcerer");
 
+        // TODO choix de l'arme par le joueur, et this.getDamage()
+        //p.addWeapon(hammer);
+        //System.out.println("Le joueur a choisi : " +p.getWeapons());
+        //System.out.println("Damage Ratio de l'arme : " +axe.getDamage()); // recuperation du damage ratio de l'arme
+
         // Ajout d'instances d'armes dans la liste d'armes du joueur
-        p.buyWeapon(new Axe());
+
 
         System.out.println("Bienvenue dans le RPG");
         System.out.println("Vous etes un "+ h.getName());
@@ -31,7 +38,7 @@ public class jeu {
         System.out.println("Menu");
         System.out.println("1. Aller au magasin d'armes");
         System.out.println("2. Changer d'arme");
-        System.out.println("2. Combattre un monstre");
+        System.out.println("3. Combattre un monstre");
         System.out.println("4. Quitter le jeu");
         int choix = scanner.nextInt();
         switch (choix) {
@@ -48,25 +55,17 @@ public class jeu {
                 break;
 
             case 2:
-                System.out.println("--- ARMES DANS L'INVENTAIRE ---");
-                for (int index = 0; index < p.getWeapons().size(); index++) {
-                    Weapon weapon = p.getWeapons().get(index);
-                    System.out.println((index + 1)+ "." + " " + weapon.getName() + " " + weapon.getDamage());
-                }
-                System.out.println("Choisissez une arme :");
-                int choixInventaire = scanner.nextInt();
-                if (choixInventaire >= 1 && choixInventaire <= p.getWeapons().size()) {
-                    Weapon weap = p.getWeapons().get(choixInventaire - 1);
-                    // Utilisez l'objet w comme nécessaire
-                    System.out.println("Vous avez choisi " + weap.getName());
+                // Si y'a plus d'une arme dans l'inventaire du joueur, alors on peut changer d'arme
+                if (p.getWeapons().size() > 1) {
+                    p.changeWeapon();
                 } else {
-                    System.out.println("Choix invalide");
+                    System.out.println("Vous n'avez pas assez d'armes pour changer d'arme");
                 }
                 break;
 
             case 3:
                 System.out.println("--- COMBAT CONTRE UN MONSTRE ---");
-
+                break;
 
             case 4:
                 System.out.println("--- VOUS AVEZ QUITTE LE JEU ---");

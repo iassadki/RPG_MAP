@@ -1,12 +1,11 @@
 package entity;
 
-import destructible.*;
+public class Monster extends Entity {
 
-public class Monster extends Destructible {
-    private static final double HP = 100.;
+    public static final double HP = 100.; // Accessible via Monstre.HP
 
-    public Monster(String s) {
-        super(HP);
+    public Monster(String name) {
+        super(name);
     }
 
 }

@@ -43,14 +43,36 @@ public class Player implements ActionsPlayer {
     }
 
     @Override
-    public void changeWeapon(Weapon w) {
+    // Ajouter une arme dans l'inventaire de Player
+    public void addWeapon(Weapon w) {
+        this.weapons.add(w);
+        System.out.println("Vous avez choisi " + w.getName());
+    }
 
+    @Override
+    public void changeWeapon() {
+        System.out.println("--- ARMES DANS L'INVENTAIRE ---");
+        for (int index = 0; index < this.getWeapons().size(); index++) {
+            Weapon weapon = this.getWeapons().get(index);
+            System.out.println((index + 1)+ "." + " " + weapon.getName() + " " + weapon.getDamage());
+        }
+        System.out.println("Choisissez une arme :");
+        Scanner scanner = new Scanner(System.in);
+        int choixInventaire = scanner.nextInt();
+        if (choixInventaire >= 1 && choixInventaire <= this.getWeapons().size()) {
+            Weapon weap = this.getWeapons().get(choixInventaire - 1);
+            // Utilisez l'objet w comme nécessaire
+            System.out.println("Vous avez choisi " + weap.getName());
+        } else {
+            System.out.println("Choix invalide");
+        }
     }
 
     @Override
     public void characterChoice(Entity h) {
         // choix du personnage avec les chiffres du clavier
-        // parcourir la liste des personnages exiustants
+        // TODO parcourir la liste des personnages existants
+
         System.out.println("Choisissez votre personnage :");
         Scanner scanner = new Scanner(System.in);
         int choixPersonnage = scanner.nextInt();

@@ -2,7 +2,8 @@ package entity;
 
 public class Entity {
 
-    public static final int MAX_HEALTH = 100;
+    // Pas d'accesseurs pour la CONST ci-dessous, accessible via SubEntity.MAX_HP par exemple
+    public static final double MAX_HP = 100.;
     private String name;
 
     public Entity(String name) {
@@ -14,13 +15,18 @@ public class Entity {
     }
 
     // methodes
-    public void attack(Entity h) {
+    public void attack(Entity e) {
         // TODO
     }
 
     public String getName() {
         return this.name;
     }
+
+
+   // public void hit(double damage) {
+     //   this.life -= damage;
+   // }
 
 
 }

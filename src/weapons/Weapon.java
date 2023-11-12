@@ -2,10 +2,9 @@ package weapons;
 
 public abstract class Weapon {
 
-    protected double damage;
-    protected double price;
-
-    protected String name;
+    private double damage;
+    private double price;
+    private String name;
 
     public Weapon(String name, double damage, double price) {
         this.name = name;

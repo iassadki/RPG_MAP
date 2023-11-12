@@ -1,12 +1,11 @@
 package entity;
 
-import destructible.Destructible;
+public class Obstacle extends Entity {
 
-public class Obstacle extends Destructible {
-    private static final double HP = 50.;
+    public static final double HP = 100.; // Accessible via Obstacle.HP
 
-    public Obstacle() {
-        super(HP);
+    public Obstacle(String name) {
+        super(name);
     }
 
 }
