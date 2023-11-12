@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Scanner;
+import map.Map;
 import entity.*;
 import weapons.*;
 import zone.WeaponStore;
@@ -10,6 +12,7 @@ public class jeu {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Map map = new Map();
         WeaponStore store = new WeaponStore();
         Player p = new Player("Ilias");
         Entity h = new Entity("Heros");
@@ -33,8 +36,11 @@ public class jeu {
 
         System.out.println("Bienvenue dans le RPG");
         System.out.println("Vous etes un "+ h.getName());
+        map.displayMap();
         // p.characterChoice(c);
 
+
+        System.out.println(" ");
         System.out.println("Menu");
         System.out.println("1. Aller au magasin d'armes");
         System.out.println("2. Changer d'arme");
@@ -59,7 +65,7 @@ public class jeu {
                 if (p.getWeapons().size() > 1) {
                     p.changeWeapon();
                 } else {
-                    System.out.println("Vous n'avez pas assez d'armes pour changer d'arme");
+                    System.out.println("Vous n'avez pas d'arme");
                 }
                 break;
 

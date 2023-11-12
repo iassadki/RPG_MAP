@@ -1,6 +1,7 @@
 package entity;
 
 import weapons.*;
+import map.Map;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,10 +12,18 @@ public class Player implements ActionsPlayer {
     private ArrayList<Weapon> weapons;
     private double money;
 
+    // Position actuelle du joueur sur la carte
+    private int playerRow;
+    private int playerCol;
+
     public Player(String name) {
         this.name = name;
         this.money = 50;
         this.weapons = new ArrayList<Weapon>();
+
+        // Initialiser la position du joueur (en bas de la carte)
+        this.playerRow = 5;
+        this.playerCol = 2;
     }
 
     public String getName() {
@@ -43,8 +52,8 @@ public class Player implements ActionsPlayer {
     }
 
     @Override
-    // Ajouter une arme dans l'inventaire de Player
     public void addWeapon(Weapon w) {
+        // Ajouter une arme dans l'inventaire de Player
         this.weapons.add(w);
         System.out.println("Vous avez choisi " + w.getName());
     }
@@ -67,6 +76,57 @@ public class Player implements ActionsPlayer {
             System.out.println("Choix invalide");
         }
     }
+
+    @Override
+    public void deplacementOnMap(char direction, Map map) {
+        // Methode pour se Déplacer sur la map avec les flèches du clavier
+        switch (direction) {
+            case 'z':
+                if (playerRow > 0) {
+                    // Déplacer vers le haut
+                    map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
+                    playerRow--;
+                    map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
+                } else {
+                    System.out.println("Vous ne pouvez pas aller plus haut.");
+                }
+                break;
+            case 's':
+                if (playerRow < 5) {
+                    // Déplacer vers le bas
+                    map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
+                    playerRow++;
+                    map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
+                } else {
+                    System.out.println("Vous ne pouvez pas aller plus bas.");
+                }
+                break;
+            case 'q':
+                if (playerCol > 0) {
+                    // Déplacer vers la gauche
+                    map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
+                    playerCol--;
+                    map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
+                } else {
+                    System.out.println("Vous ne pouvez pas aller plus à gauche.");
+                }
+                break;
+            case 'd':
+                if (playerCol < 5) {
+                    // Déplacer vers la droite
+                    map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
+                    playerCol++;
+                    map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
+                } else {
+                    System.out.println("Vous ne pouvez pas aller plus à droite.");
+                }
+                break;
+            default:
+                System.out.println("Commande invalide.");
+                break;
+        }
+    }
+
 
     @Override
     public void characterChoice(Entity h) {
