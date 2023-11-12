@@ -29,9 +29,17 @@ public class Map {
 
         // Placer la sortie en haut à gauche de la carte
         map[0][1] = 'E'; // E pour sortie
+
+        // Placer le joueur en bas de la carte
+        int playerRow = 5;
+        int playerCol = 2;
+        map[playerRow][playerCol] = 'P'; // P pour joueur
     }
 
+
     public void displayMap() {
+        System.out.println(" ");
+        System.out.println(" ");
         System.out.println("--- MAP ---");
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {

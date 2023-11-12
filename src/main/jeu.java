@@ -39,6 +39,22 @@ public class jeu {
         map.displayMap();
         // p.characterChoice(c);
 
+        while (true) {
+            System.out.println("Appuyez sur une touche (z pour haut, s pour bas, q pour gauche, d pour droite, ou 'q' pour quitter) :");
+            char input = scanner.next().charAt(0);
+
+            // Vérifier si l'utilisateur souhaite quitter
+            if (input == 'k') {
+                System.out.println("Au revoir !");
+                break;
+            }
+
+            // Déplacer le joueur en fonction de la touche appuyée
+            p.deplacementOnMap(input, map);
+
+            // Afficher la carte après le déplacement
+            map.displayMap();
+        }
 
         System.out.println(" ");
         System.out.println("Menu");

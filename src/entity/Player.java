@@ -79,53 +79,77 @@ public class Player implements ActionsPlayer {
 
     @Override
     public void deplacementOnMap(char direction, Map map) {
-        // Methode pour se Déplacer sur la map avec les flèches du clavier
+        // Condition pour vérifier si la case suivante est vide ou remplie
+        char nextCell = ' ';
+
         switch (direction) {
             case 'z':
                 if (playerRow > 0) {
-                    // Déplacer vers le haut
-                    map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
-                    playerRow--;
-                    map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
+                    nextCell = map.getMap()[playerRow - 1][playerCol];
                 } else {
-                    System.out.println("Vous ne pouvez pas aller plus haut.");
+                    System.out.println("Vous ne pouvez pas sortir de la limite supérieure de la carte.");
+                    return;
                 }
                 break;
             case 's':
                 if (playerRow < 5) {
-                    // Déplacer vers le bas
-                    map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
-                    playerRow++;
-                    map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
+                    nextCell = map.getMap()[playerRow + 1][playerCol];
                 } else {
-                    System.out.println("Vous ne pouvez pas aller plus bas.");
+                    System.out.println("Vous ne pouvez pas sortir de la limite inférieure de la carte.");
+                    return;
                 }
                 break;
             case 'q':
                 if (playerCol > 0) {
-                    // Déplacer vers la gauche
-                    map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
-                    playerCol--;
-                    map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
+                    nextCell = map.getMap()[playerRow][playerCol - 1];
                 } else {
-                    System.out.println("Vous ne pouvez pas aller plus à gauche.");
+                    System.out.println("Vous ne pouvez pas sortir de la limite gauche de la carte.");
+                    return;
                 }
                 break;
             case 'd':
                 if (playerCol < 5) {
-                    // Déplacer vers la droite
-                    map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
-                    playerCol++;
-                    map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
+                    nextCell = map.getMap()[playerRow][playerCol + 1];
                 } else {
-                    System.out.println("Vous ne pouvez pas aller plus à droite.");
+                    System.out.println("Vous ne pouvez pas sortir de la limite droite de la carte.");
+                    return;
                 }
                 break;
             default:
                 System.out.println("Commande invalide.");
-                break;
+                return;
+        }
+
+        // Vérifier la case suivante et afficher le message approprié
+        if (nextCell == 'O') {
+            System.out.println("--- DETRUIRE CET OBSTACLE ---");
+        } else if (nextCell == '#') {
+            System.out.println("--- COMBAT CONTRE MONSTRE ---");
+        } else if (nextCell == 'E') {
+            System.out.println("--- VOUS AVEZ FINI LE JEU ---");
+            System.exit(0);
+        } else {
+            // Déplacer le joueur
+            map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
+            switch (direction) {
+                case 'z':
+                    playerRow--;
+                    break;
+                case 's':
+                    playerRow++;
+                    break;
+                case 'q':
+                    playerCol--;
+                    break;
+                case 'd':
+                    playerCol++;
+                    break;
+            }
+            map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
         }
     }
+
+
 
 
     @Override
