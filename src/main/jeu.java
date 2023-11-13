@@ -15,7 +15,7 @@ public class jeu {
         Map map = new Map();
         WeaponStore store = new WeaponStore();
         Player p = new Player("Ilias");
-        Entity h = new Entity("Heros");
+        Hero h = new Hero("Heros");
         Monster m1 = new Monster("Monster 1");
         Monster m2 = new Monster("Monster 2");
         Monster m3 = new Monster("Monster 3");
@@ -50,6 +50,7 @@ public class jeu {
             }
 
             // Déplacer le joueur en fonction de la touche appuyée
+            //p.deplacementOnMap(input, map);
             p.deplacementOnMap(input, map);
 
             // Afficher la carte après le déplacement

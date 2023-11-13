@@ -125,6 +125,12 @@ public class Player implements ActionsPlayer {
             System.out.println("--- DETRUIRE CET OBSTACLE ---");
         } else if (nextCell == '#') {
             System.out.println("--- COMBAT CONTRE MONSTRE ---");
+            // TODO combat contre un monstre
+            // tant que le heros ou le monstre à plus de 100 HP, continuer le combat
+            // attaquer le monstre avec la methode attack de la classe Hero
+            //while (Hero.HP > 0 && Monster.HP > 0) {
+            //    Hero.attack(this.monster);
+            //}
         } else if (nextCell == 'E') {
             System.out.println("--- VOUS AVEZ FINI LE JEU ---");
             System.exit(0);
