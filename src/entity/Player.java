@@ -133,14 +133,6 @@ public class Player implements ActionsPlayer {
         return nextCell;
     }
 
-    // Methode pour verifier si la case suivante est la case de sortie
-    private void exitCase(Map map, Entity e, char direction) {
-        if (nextCell == 'E') {
-            System.out.println("Vous avez atteint la sortie!");
-            System.exit(0);
-        }
-    }
-
     // Nouvelle méthode pour gérer le contenu de la case suivante
     private void handleNextCellContent(Map map, Entity e, char direction) {
         //Destructible d;

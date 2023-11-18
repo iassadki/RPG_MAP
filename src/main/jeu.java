@@ -88,7 +88,7 @@ public class jeu {
         map.displayMap();
 
         // Boucle infinie, tant que le joueur n'a pas atteint la case de sortie, qui est la case E
-        while (p.exitCase()) {
+        while (map.playerOnExit(0,1) == false) {
             // Menu affiché tout le temps
             System.out.println("Appuyez sur une touche (z pour haut, s pour bas, q pour gauche, d pour droite, ou 'q' pour quitter) :");
             System.out.println("Menu");

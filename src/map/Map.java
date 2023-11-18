@@ -1,5 +1,7 @@
 package map;
 
+import entity.Entity;
+
 import java.util.Random;
 
 public class Map {
@@ -7,6 +9,7 @@ public class Map {
     // Carte 6X6
 
     private char[][] map;
+    private char nextCell;  // Nouvelle variable pour stocker la valeur de nextCell
 
     public Map() {
         map = new char[6][6];  // Correction ici : utilisez la variable de classe plutôt qu'une variable locale
@@ -58,6 +61,13 @@ public class Map {
         this.map = map;
     }
 
-
+    // Condition pour que si le joueur est dans la matrice map[0][1] de la map, fin du jeu et message
+    public boolean playerOnExit(int playerRow, int playerCol) {
+        if (playerRow == 0 && playerCol == 1) {
+            System.out.println("Vous avez atteint la soqZDrtie!");
+            return true;
+        }
+        return false;
+    }
 
 }
