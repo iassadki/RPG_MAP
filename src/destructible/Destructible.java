@@ -2,11 +2,13 @@ package destructible;
 
 public class Destructible {
 
-    protected double life  = 100.;
+    public double life  = 100.;
 
     public Destructible(double hp) {
         this.life = hp;
     }
+
+    public Destructible() { } // constructeur vide
 
     public double getLife() {
         return this.life;

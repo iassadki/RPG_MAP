@@ -2,31 +2,32 @@ package entity;
 
 public class Entity {
 
-    // Pas d'accesseurs pour la CONST ci-dessous, accessible via SubEntity.MAX_HP par exemple
-    public static final double MAX_HP = 100.;
     private String name;
+    private double HP; // Ajout d'une variable pour stocker les points de vie actuels
 
     public Entity(String name) {
         this.name = name;
+        this.HP = 100.0; // Initialise les points de vie actuels avec une valeur par défaut
     }
 
     public Entity() {
-
-    }
-
-    // methodes
-    public void attack(Entity e) {
-        // TODO
+        this.HP = 100.0; // Initialise les points de vie actuels avec une valeur par défaut
     }
 
     public String getName() {
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   // public void hit(double damage) {
-     //   this.life -= damage;
-   // }
+    public double getCurrentHP() {
+        return this.HP;
+    }
 
+    public void hit(double damage) {
+        this.HP -= damage;
+    }
 
 }

@@ -1,24 +1,30 @@
 package main;
 
 import java.util.Scanner;
+
+import destructible.Destructible;
+import destructible.Monster;
+import destructible.Obstacle;
 import map.Map;
 import entity.*;
 import weapons.*;
 import zone.WeaponStore;
 
-import java.util.Scanner;
-
 public class jeu {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Obstacle o = new Obstacle();
+        Destructible d = new Destructible();
+        Entity e = new Entity();
+        Entity elfe = new Elfe();    //
+        Entity warrior = new Warrior(); //
         Map map = new Map();
         WeaponStore store = new WeaponStore();
         Player p = new Player("Ilias");
-        Hero h = new Hero("Heros");
-        Monster m1 = new Monster("Monster 1");
-        Monster m2 = new Monster("Monster 2");
-        Monster m3 = new Monster("Monster 3");
+        //Monster m1 = new Monster();
+        //Monster m2 = new Monster();
+        //Monster m3 = new Monster();
         // Weapon awe = new Axe();
         //Axe axe = new Axe();
         //Hammer hammer = new Hammer();
@@ -31,78 +37,130 @@ public class jeu {
         //System.out.println("Le joueur a choisi : " +p.getWeapons());
         //System.out.println("Damage Ratio de l'arme : " +axe.getDamage()); // recuperation du damage ratio de l'arme
 
-        // Ajout d'instances d'armes dans la liste d'armes du joueur
-
-
         System.out.println("Bienvenue dans le RPG");
-        System.out.println("Vous etes un "+ h.getName());
-        map.displayMap();
         // p.characterChoice(c);
-
-        while (true) {
-            System.out.println("Appuyez sur une touche (z pour haut, s pour bas, q pour gauche, d pour droite, ou 'q' pour quitter) :");
-            char input = scanner.next().charAt(0);
-
-            // Vérifier si l'utilisateur souhaite quitter
-            if (input == 'k') {
-                System.out.println("Au revoir !");
-                break;
-            }
-
-            // Déplacer le joueur en fonction de la touche appuyée
-            //p.deplacementOnMap(input, map);
-            p.deplacementOnMap(input, map);
-
-            // Afficher la carte après le déplacement
-            map.displayMap();
-        }
-
+        System.out.println("Vous avez choisi " + e.getName());
         System.out.println(" ");
         System.out.println("Menu");
         System.out.println("1. Aller au magasin d'armes");
         System.out.println("2. Changer d'arme");
-        System.out.println("3. Combattre un monstre");
-        System.out.println("4. Quitter le jeu");
-        int choix = scanner.nextInt();
-        switch (choix) {
-            case 1:
-                System.out.println("--- MAGASIN D'ARMES ---");
-                System.out.println("Voici les armes disponibles :");
-                store.printWeaponsList();
-                System.out.println("Choisissez une arme :");
-                int choixArme = scanner.nextInt();
-                Weapon w = store.getWeapon(choixArme);
-                p.buyWeapon(w);
-                System.out.println("Vous avez acheté " + w.getName());
-                System.out.println("Vous avez " + p.getMoney() + " pieces");
-                break;
+        System.out.println("3. Quitter le jeu");
 
-            case 2:
-                // Si y'a plus d'une arme dans l'inventaire du joueur, alors on peut changer d'arme
-                if (p.getWeapons().size() > 1) {
-                    p.changeWeapon();
-                } else {
-                    System.out.println("Vous n'avez pas d'arme");
+        // Lire l'entrée de l'utilisateur sous forme de chaîne
+        String userInputt = scanner.next();
+
+        // Vérifier si l'entrée est un chiffre (option du menu)
+        if (userInputt.matches("\\d+")) {
+            int choice = Integer.parseInt(userInputt);
+            switch (choice) {
+                case 1:
+                    // Option pour aller au magasin d'armes
+                    System.out.println("--- MAGASIN D'ARMES ---");
+                    System.out.println("Voici les armes disponibles :");
+                    store.printWeaponsList();
+                    System.out.println("Choisissez une arme :");
+                    int choixArme = scanner.nextInt();
+                    Weapon w = store.getWeapon(choixArme);
+                    p.buyWeapon(w);
+                    System.out.println("Vous avez acheté " + w.getName());
+                    System.out.println("Vous avez " + p.getMoney() + " pieces");
+                    break;
+                case 2:
+                    // Option pour changer d'arme
+                    if (p.getWeapons().size() > 1) {
+                        p.changeWeapon();
+                    } else {
+                        System.out.println("Vous n'avez pas d'arme");
+                    }
+                    break;
+                case 3:
+                    // Option pour quitter le jeu
+                    System.out.println("--- VOUS AVEZ QUITTE LE JEU ---");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Choix invalide");
+                    break;
+            }
+
+
+        // Affichage de la map
+        map.displayMap();
+
+        // Boucle infinie, tant que le joueur n'a pas atteint la case de sortie, qui est la case E
+        while (p.exitCase()) {
+            // Menu affiché tout le temps
+            System.out.println("Appuyez sur une touche (z pour haut, s pour bas, q pour gauche, d pour droite, ou 'q' pour quitter) :");
+            System.out.println("Menu");
+            System.out.println("1. Aller au magasin d'armes");
+            System.out.println("2. Changer d'arme");
+            System.out.println("3. Quitter le jeu");
+
+            // Lire l'entrée de l'utilisateur sous forme de chaîne
+            String userInput = scanner.next();
+
+            // Vérifier si l'utilisateur souhaite quitter
+            if (userInput.equals("k")) {
+                System.out.println("Au revoir !");
+                break;
+            }
+
+            // Vérifier si l'entrée est un chiffre (option du menu)
+            if (userInput.matches("\\d+")) {
+                int choix = Integer.parseInt(userInput);
+                switch (choix) {
+                    case 1:
+                        // Option pour aller au magasin d'armes
+                        System.out.println("--- MAGASIN D'ARMES ---");
+                        System.out.println("Voici les armes disponibles :");
+                        store.printWeaponsList();
+                        System.out.println("Choisissez une arme :");
+                        int choixArme = scanner.nextInt();
+                        Weapon w = store.getWeapon(choixArme);
+                        p.buyWeapon(w);
+                        System.out.println("Vous avez acheté " + w.getName());
+                        System.out.println("Vous avez " + p.getMoney() + " pieces");
+                        break;
+                    case 2:
+                        // Option pour changer d'arme
+                        if (p.getWeapons().size() > 1) {
+                            p.changeWeapon();
+                        } else {
+                            System.out.println("Vous n'avez pas d'arme");
+                        }
+                        break;
+                    case 3:
+                        // Option pour quitter le jeu
+                        System.out.println("--- VOUS AVEZ QUITTE LE JEU ---");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Choix invalide");
+                        break;
                 }
-                break;
+            } else {
+                // L'utilisateur a saisi un caractère zqsd pour se déplacer
+                char input = userInput.charAt(0);
+                char nextCell = p.deplacementOnMap(input, map, e);
 
-            case 3:
-                System.out.println("--- COMBAT CONTRE UN MONSTRE ---");
-                break;
+                // Utiliser la valeur de nextCell comme nécessaire
+                if (nextCell == 'O') {
+                    System.out.println("Vous avez rencontré un obstacle!");
+                } else if (nextCell == '#') {
+                    System.out.println("Vous avez rencontré un monstre!");
+                    // TODO: Ajoutez ici la logique pour combattre un monstre
+                } else if (nextCell == 'E') {
+                    System.out.println("Vous avez atteint la sortie!");
+                } else {
+                    System.out.println("Vous avez rencontré une case vide.");
+                }
+            }
 
-            case 4:
-                System.out.println("--- VOUS AVEZ QUITTE LE JEU ---");
-                System.exit(0);
-                break;
-
-            default:
-                System.out.println("Choix invalide");
-                break;
+            // Afficher la carte après l'action
+            map.displayMap();
         }
 
 
-
-
-
     }
+}
 }

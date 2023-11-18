@@ -1,7 +1,8 @@
 package weapons;
 
+import destructible.Monster;
 import entity.*;
-import entity.Obstacle;
+import destructible.Obstacle;
 
 public class Axe extends Weapon {
 
@@ -26,13 +27,14 @@ public class Axe extends Weapon {
      * @return double
      */
     public static double getDamageRatio(Entity e) {
-        if (e instanceof Monster) {
-            return MONSTER_DAMAGE_RATIO;
-        } else if (e instanceof Obstacle) {
-            return OBSTACLE_DAMAGE_RATIO;
-        } else {
-            return 1.;
-        }
+       // if (e instanceof Monster) {
+        //    return MONSTER_DAMAGE_RATIO;
+        //} else if (e instanceof Obstacle) {
+        //    return OBSTACLE_DAMAGE_RATIO;
+        //} else {
+        //    return 1;
+        //}
+        return 0;
     }
 
     public void attack(Entity e) {
