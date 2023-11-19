@@ -18,6 +18,7 @@ public class Player implements ActionsPlayer {
     private Elfe elfe;
     private Mage mage;
     private Warrior warrior;
+    private Map map;
 
     // Position actuelle du joueur sur la carte
     private int playerRow;
@@ -144,12 +145,12 @@ public class Player implements ActionsPlayer {
             //map.getMap()[playerRow][playerCol] = ' ';
             // transformer nextCell en P/O pour afficher le joueur dans la case de l'obstacle
             Destructible o1 = new Obstacle();
-            handleObstacleCombat(e, o1);
+            handleObstacleCombat(map, e, o1);
             //movePlayer(map, direction);
         } else if (nextCell == '#') {
             //map.getMap()[playerRow][playerCol] = ' ';
             Destructible m1 = new Monster();
-            handleMonsterCombat(e, m1);
+            handleMonsterCombat(map, e, m1);
             //movePlayer(map, direction);
         } else {
             movePlayer(map, direction);
@@ -157,9 +158,11 @@ public class Player implements ActionsPlayer {
     }
 
     // Méthode pour gérer le combat contre un obstacle
-    private void handleObstacleCombat(Entity e, Destructible d) {
+    private void handleObstacleCombat(Map map, Entity e, Destructible d) {
         System.out.println("--- DETRUIRE CET OBSTACLE ---");
         System.out.println("Obstacle HP: " + d.getLife());
+
+        //Map map;
 
         while (d.getLife() > 0 && e.getCurrentHP() > 0) {
             System.out.println("Hero HP: " + e.getCurrentHP() + " " + "Obstacle HP: " + d.getLife());
@@ -198,6 +201,8 @@ public class Player implements ActionsPlayer {
         // Afficher le résultat du combat
         if (e.getCurrentHP() > 0) {
             System.out.println("Vous avez détruit l'obstacle!");
+            map.clearCell(playerRow, playerCol); // Effacer la position actuelle du joueur
+            map.placePlayer(playerRow, playerCol); // Afficher le joueur dans la nouvelle position
         } else {
             System.out.println("Vous etes mort!");
             System.exit(0);
@@ -206,7 +211,7 @@ public class Player implements ActionsPlayer {
 
 
     // Méthode pour gérer le combat contre un monstre
-    private void handleMonsterCombat(Entity e, Destructible d) {
+    private void handleMonsterCombat(Map map, Entity e, Destructible d) {
         System.out.println("--- COMBAT CONTRE MONSTRE ---");
         //Player p = null;
 
@@ -246,19 +251,16 @@ public class Player implements ActionsPlayer {
                         System.out.println("Choix invalide");
                         break;
                 }
-            } // else {
-            // test si c'est un elfe ou un mage, faire un test sur le reste des attaques spéciales
-            // if (this.e.getName() == "Elfe") {
-            //     System.out.println("Elfe attaque spéciale");
-            //     e.specialAttack(d);
-            // } else if (this.e.getName() == "Mage") {
-            //     System.out.println("Mage attaque spéciale");
-            // }
-            //}
+            }
 
             // Afficher le résultat du combat
             if (d.getLife() <= 0) {
                 System.out.println("Vous avez vaincu le monstre!");
+                //char currentCell = map.getMap()[playerRow][playerCol];
+                // Effacer la position actuelle
+                //map.clearCell(playerRow - 1, playerCol);
+
+
             } else if (e.getCurrentHP() <= 0) {
                 System.out.println("Vous êtes mort!");
                 System.out.println(e.getCurrentHP());
@@ -295,9 +297,9 @@ public class Player implements ActionsPlayer {
 
         // Vérifier si la nouvelle position contient un obstacle
         if (currentCell == 'O') {
-            map.getMap()[playerRow][playerCol] = 'P';  // Si c'était un obstacle, afficher P/O
+            map.getMap()[playerRow][playerCol] = 'P';
         } else {
-            map.getMap()[playerRow][playerCol] = 'P';  // Sinon, afficher simplement le joueur
+            map.getMap()[playerRow][playerCol] = 'P';
         }
     }
 

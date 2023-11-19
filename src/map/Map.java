@@ -39,6 +39,13 @@ public class Map {
         map[playerRow][playerCol] = 'P'; // P pour joueur
     }
 
+    public void clearCell(int row, int col) {
+        map[row][col] = ' ';
+    }
+
+    public void placePlayer(int row, int col) {
+        map[row][col] = 'P';
+    }
 
     public void displayMap() {
         System.out.println(" ");
