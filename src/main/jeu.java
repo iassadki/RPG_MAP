@@ -136,7 +136,7 @@ public class jeu {
             // Afficher la carte après l'action
             map.displayMap();
         }
-
+        System.out.println("Vous avez fini le jeu !");
 
     }
 }
