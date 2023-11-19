@@ -22,24 +22,9 @@ public class jeu {
         Map map = new Map();
         WeaponStore store = new WeaponStore();
         Player p = new Player("Ilias");
-        //Monster m1 = new Monster();
-        //Monster m2 = new Monster();
-        //Monster m3 = new Monster();
-        // Weapon awe = new Axe();
-        //Axe axe = new Axe();
-        //Hammer hammer = new Hammer();
-        //Bow bow = new Bow();
-        // Elf elf = new Elf("Elf");
-        // Sorcerer sorcerer = new Sorcerer("Sorcerer");
-
-        // TODO choix de l'arme par le joueur, et this.getDamage()
-        //p.addWeapon(hammer);
-        //System.out.println("Le joueur a choisi : " +p.getWeapons());
-        //System.out.println("Damage Ratio de l'arme : " +axe.getDamage()); // recuperation du damage ratio de l'arme
 
         System.out.println("Bienvenue dans le RPG");
-        // p.characterChoice(c);
-        System.out.println("Vous avez choisi " + e.getName());
+        p.characterChoice();
         System.out.println(" ");
         System.out.println("Menu");
         System.out.println("1. Aller au magasin d'armes");
@@ -129,7 +114,7 @@ public class jeu {
             } else {
                 // L'utilisateur a saisi un caractère zqsd pour se déplacer
                 char input = userInput.charAt(0);
-                char nextCell = p.deplacementOnMap(input, map, e);
+                p.deplacementOnMap(input, map, e);
 
             }
 

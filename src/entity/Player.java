@@ -14,6 +14,7 @@ public class Player implements ActionsPlayer {
     private String name;
     private ArrayList<Weapon> weapons;
     private double money;
+    private Entity e;
 
     // Position actuelle du joueur sur la carte
     private int playerRow;
@@ -86,7 +87,7 @@ public class Player implements ActionsPlayer {
     }
 
     @Override
-    public char deplacementOnMap(char direction, Map map, Entity e) {
+    public void deplacementOnMap(char direction, Map map, Entity e) {
         // Condition pour vérifier si la case suivante est vide ou remplie
         nextCell = ' ';
 
@@ -96,7 +97,7 @@ public class Player implements ActionsPlayer {
                     nextCell = map.getMap()[playerRow - 1][playerCol];
                 } else {
                     System.out.println("Vous ne pouvez pas sortir de la limite supérieure de la carte.");
-                    //return;
+                    return;
                 }
                 break;
             case 's':
@@ -104,7 +105,7 @@ public class Player implements ActionsPlayer {
                     nextCell = map.getMap()[playerRow + 1][playerCol];
                 } else {
                     System.out.println("Vous ne pouvez pas sortir de la limite inférieure de la carte.");
-                    //return;
+                    return;
                 }
                 break;
             case 'q':
@@ -112,7 +113,7 @@ public class Player implements ActionsPlayer {
                     nextCell = map.getMap()[playerRow][playerCol - 1];
                 } else {
                     System.out.println("Vous ne pouvez pas sortir de la limite gauche de la carte.");
-                    //return;
+                    return;
                 }
                 break;
             case 'd':
@@ -120,31 +121,33 @@ public class Player implements ActionsPlayer {
                     nextCell = map.getMap()[playerRow][playerCol + 1];
                 } else {
                     System.out.println("Vous ne pouvez pas sortir de la limite droite de la carte.");
-                    //return;
+                    return;
                 }
                 break;
             default:
                 System.out.println("Commande invalide.");
-                //return;
+                return;
         }
 
         // Appelle des méthodes spécifiques en fonction du contenu de la case suivante
         handleNextCellContent(map, e, direction);
-        return nextCell;
+        //return nextCell;
     }
 
     // Nouvelle méthode pour gérer le contenu de la case suivante
     private void handleNextCellContent(Map map, Entity e, char direction) {
         //Destructible d;
         if (nextCell == 'O') {
+            //map.getMap()[playerRow][playerCol] = ' ';
+            // transformer nextCell en P/O pour afficher le joueur dans la case de l'obstacle
             Destructible o1 = new Obstacle();
             handleObstacleCombat(e, o1);
+            //movePlayer(map, direction);
         } else if (nextCell == '#') {
+            //map.getMap()[playerRow][playerCol] = ' ';
             Destructible m1 = new Monster();
             handleMonsterCombat(e, m1);
-        //} else if (nextCell == 'E') {
-        //    System.out.println("Vous avez atteint la sortie!");
-        //    System.exit(0);
+            //movePlayer(map, direction);
         } else {
             movePlayer(map, direction);
         }
@@ -205,7 +208,13 @@ public class Player implements ActionsPlayer {
 
     // Méthode pour déplacer le joueur
     private void movePlayer(Map map, char direction) {
-        map.getMap()[playerRow][playerCol] = ' ';  // Effacer la position actuelle
+        // Stocker la valeur actuelle de la cellule
+        char currentCell = map.getMap()[playerRow][playerCol];
+
+        // Effacer la position actuelle
+        map.getMap()[playerRow][playerCol] = ' ';
+
+        // Mettre à jour la nouvelle position
         switch (direction) {
             case 'z':
                 playerRow--;
@@ -220,28 +229,43 @@ public class Player implements ActionsPlayer {
                 playerCol++;
                 break;
         }
-        map.getMap()[playerRow][playerCol] = 'P';  // Mettre à jour la nouvelle position
 
-        // ... (le reste du code de déplacement)
+        // Vérifier si la nouvelle position contient un obstacle
+        if (currentCell == 'O') {
+            map.getMap()[playerRow][playerCol] = 'P';  // Si c'était un obstacle, afficher P/O
+        } else {
+            map.getMap()[playerRow][playerCol] = 'P';  // Sinon, afficher simplement le joueur
+        }
     }
 
     @Override
-    public void characterChoice(Entity h) {
+    public void characterChoice() {
         // Choix du personnage avec les chiffres du clavier
-        // TODO parcourir la liste des personnages existants
-
         System.out.println("Choisissez votre personnage :");
+        System.out.println("1. Elfe");
+        System.out.println("2. Mage");
+        System.out.println("3. Warrior");
         Scanner scanner = new Scanner(System.in);
         int choixPersonnage = scanner.nextInt();
         switch (choixPersonnage) {
             case 1:
-                System.out.println("Vous avez choisi " + h.getName());
+                // Option pour choisir le personnage Elfe
+                e = new Elfe();
+                e.setName("Elfe");
+                System.out.println("Vous avez choisi la classe " + e.getName());
                 break;
-
             case 2:
-                System.out.println("Vous avez choisi " + h.getName());
+                // Option pour choisir le personnage Mage
+                e = new Mage();
+                e.setName("Mage");
+                System.out.println("Vous avez choisi la classe " + e.getName());
                 break;
-
+            case 3:
+                // Option pour choisir le personnage Warrior
+                e = new Warrior();
+                e.setName("Warrior");
+                System.out.println("Vous avez choisi la classe " + e.getName());
+                break;
             default:
                 System.out.println("Choix invalide");
                 break;

@@ -9,8 +9,8 @@ public interface ActionsPlayer {
     void addWeapon(Weapon w);
     void buyWeapon(Weapon w);
     void changeWeapon();
-    char deplacementOnMap(char direction, Map map, Entity e);
-    void characterChoice(Entity c);
+    void deplacementOnMap(char direction, Map map, Entity e);
+    void characterChoice();
     void attack(Destructible d);
 
 }
