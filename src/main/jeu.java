@@ -14,11 +14,7 @@ public class jeu {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Obstacle o = new Obstacle();
-        Destructible d = new Destructible();
         Entity e = new Entity();
-        Entity elfe = new Elfe();    //
-        Entity warrior = new Warrior(); //
         Map map = new Map();
         WeaponStore store = new WeaponStore();
         Player p = new Player("Ilias");
@@ -96,6 +92,7 @@ public class jeu {
                         break;
                     case 2:
                         // Option pour changer d'arme
+                        System.out.println(p.getWeapons());
                         if (p.getWeapons().size() > 1) {
                             p.changeWeapon();
                         } else {

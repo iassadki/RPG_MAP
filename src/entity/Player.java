@@ -15,6 +15,9 @@ public class Player implements ActionsPlayer {
     private ArrayList<Weapon> weapons;
     private double money;
     private Entity e;
+    private Elfe elfe;
+    private Mage mage;
+    private Warrior warrior;
 
     // Position actuelle du joueur sur la carte
     private int playerRow;
@@ -160,9 +163,36 @@ public class Player implements ActionsPlayer {
 
         while (d.getLife() > 0 && e.getCurrentHP() > 0) {
             System.out.println("Hero HP: " + e.getCurrentHP() + " " + "Obstacle HP: " + d.getLife());
+            System.out.println("Que voulez vous faire ?");
+            System.out.println("1. Attaquer");
+            System.out.println("2. Attaque spéciale");
+            System.out.println("3. Fuir");
 
-            // Tour du héros : infliger des dégâts à l'obstacle
-            d.hit(this.getWeapons().get(0).getDamage());
+            Scanner scanner = new Scanner(System.in);
+            int choixDuJoueur = scanner.nextInt();
+            switch (choixDuJoueur) {
+                case 1:
+                    System.out.println("--- ATTAQUE NORMALE ---");
+                    d.hit(this.getWeapons().get(0).getDamage());
+                    break;
+                case 2:
+                    System.out.println("--- ATTAQUE SPECIALE ---");
+                    switch (this.e.getName()) {
+                        case "Elfe" -> this.e.specialAttack(this, d); // elfe.specialAttack(d);
+                        case "Mage" -> this.e.specialAttack(this, d); // mage.specialAttack(d);
+                        case "Warrior" -> this.e.specialAttack(this, d); // warrior.specialAttack(d);
+                    }
+                    //d.hit(this.getWeapons().get(0).getDamage());
+                    break;
+                case 3:
+                    System.out.println("--- FUITE ---");
+                    // Gerer la fuite du Player du combat
+                    //movePlayer(map, direction);
+                    break;
+                default:
+                    System.out.println("Choix invalide");
+                    break;
+            }
         }
 
         // Afficher le résultat du combat
@@ -178,30 +208,63 @@ public class Player implements ActionsPlayer {
     // Méthode pour gérer le combat contre un monstre
     private void handleMonsterCombat(Entity e, Destructible d) {
         System.out.println("--- COMBAT CONTRE MONSTRE ---");
+        //Player p = null;
 
         boolean tourHeros = true;
 
         while (d.getLife() > 0 && e.getCurrentHP() > 0) {
-            System.out.println("Hero HP: " + e.getCurrentHP() + " " + "Monster HP: " + d.getLife());
+            System.out.println(this.e.getName() + " : " + e.getCurrentHP() + " " + "Monster HP: " + d.getLife());
 
             if (tourHeros) {
-                // Tour du héros : infliger des dégâts au monstre
-                d.hit(this.getWeapons().get(0).getDamage());
-            } else {
-                // Tour du monstre : infliger des dégâts au héros
-                e.hit(10); // Remplacez 50 par le montant réel de dégâts du monstre (si cela diffère)
+                System.out.println("Que voulez vous faire ?");
+                System.out.println("1. Attaquer");
+                System.out.println("2. Attaque spéciale");
+                System.out.println("3. Fuir");
+
+                Scanner scanner = new Scanner(System.in);
+                int choixDuJoueur = scanner.nextInt();
+                switch (choixDuJoueur) {
+                    case 1:
+                        System.out.println("--- ATTAQUE NORMALE ---");
+                        d.hit(this.getWeapons().get(0).getDamage());
+                        break;
+                    case 2:
+                        System.out.println("--- ATTAQUE SPECIALE ---");
+                        switch (this.e.getName()) {
+                            case "Elfe" -> this.e.specialAttack(this, d); // elfe.specialAttack(d);
+                            case "Mage" -> this.e.specialAttack(this, d); // mage.specialAttack(d);
+                            case "Warrior" -> this.e.specialAttack(this, d); // warrior.specialAttack(d);
+                        }
+                        //d.hit(this.getWeapons().get(0).getDamage());
+                        break;
+                    case 3:
+                        System.out.println("--- FUITE ---");
+                        // Gerer la fuite du Player du combat
+                        //movePlayer(map, direction);
+                        break;
+                    default:
+                        System.out.println("Choix invalide");
+                        break;
+                }
+            } // else {
+            // test si c'est un elfe ou un mage, faire un test sur le reste des attaques spéciales
+            // if (this.e.getName() == "Elfe") {
+            //     System.out.println("Elfe attaque spéciale");
+            //     e.specialAttack(d);
+            // } else if (this.e.getName() == "Mage") {
+            //     System.out.println("Mage attaque spéciale");
+            // }
+            //}
+
+            // Afficher le résultat du combat
+            if (d.getLife() <= 0) {
+                System.out.println("Vous avez vaincu le monstre!");
+            } else if (e.getCurrentHP() <= 0) {
+                System.out.println("Vous êtes mort!");
+                System.out.println(e.getCurrentHP());
+                System.exit(0);
             }
-
-            // Alternance des tours
-            tourHeros = !tourHeros;
-        }
-
-        // Afficher le résultat du combat
-        if (e.getCurrentHP() > 0) {
-            System.out.println("Vous avez vaincu le monstre!");
-        } else {
-            System.out.println("Vous etes mort!");
-            System.exit(0);
+            tourHeros = !tourHeros; // Inverser la valeur de tourHeros
         }
     }
 
@@ -247,30 +310,32 @@ public class Player implements ActionsPlayer {
         System.out.println("3. Warrior");
         Scanner scanner = new Scanner(System.in);
         int choixPersonnage = scanner.nextInt();
+
         switch (choixPersonnage) {
             case 1:
                 // Option pour choisir le personnage Elfe
-                e = new Elfe();
-                e.setName("Elfe");
-                System.out.println("Vous avez choisi la classe " + e.getName());
+                this.e = new Elfe();
+                this.e.setName("Elfe");
+                System.out.println("Vous avez choisi la classe " + this.e.getName());
                 break;
             case 2:
                 // Option pour choisir le personnage Mage
-                e = new Mage();
-                e.setName("Mage");
-                System.out.println("Vous avez choisi la classe " + e.getName());
+                this.e = new Mage();
+                this.e.setName("Mage");
+                System.out.println("Vous avez choisi la classe " + this.e.getName());
                 break;
             case 3:
                 // Option pour choisir le personnage Warrior
-                e = new Warrior();
-                e.setName("Warrior");
-                System.out.println("Vous avez choisi la classe " + e.getName());
+                this.e = new Warrior();
+                this.e.setName("Warrior");
+                System.out.println("Vous avez choisi la classe " + this.e.getName());
                 break;
             default:
                 System.out.println("Choix invalide");
                 break;
         }
     }
+
 
     @Override
     public void attack(Destructible d) {

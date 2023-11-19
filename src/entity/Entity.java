@@ -1,17 +1,24 @@
 package entity;
 
+import destructible.Destructible;
+import weapons.Weapon;
+
 public class Entity {
 
     private String name;
-    private double HP; // Ajout d'une variable pour stocker les points de vie actuels
+    private double HP;
+    private int specialAttackCount;
+    Player p;
+    //private Destructible d;
 
     public Entity(String name) {
         this.name = name;
-        this.HP = 100.0; // Initialise les points de vie actuels avec une valeur par défaut
+        this.HP = 100.0;
+        this.specialAttackCount = 2;
     }
 
     public Entity() {
-        this.HP = 100.0; // Initialise les points de vie actuels avec une valeur par défaut
+        this.HP = 100.0;
     }
 
     public String getName() {
@@ -26,8 +33,19 @@ public class Entity {
         return this.HP;
     }
 
+    public double getSpecialAttackCount() {
+        return specialAttackCount;
+    }
+
     public void hit(double damage) {
         this.HP -= damage;
     }
 
+    public void specialAttack(Player p, Destructible d) {
+    }
+
+    // Implémentation par défaut de getEntityName
+    public String getEntityName() {
+        return "Entity";
+    }
 }
