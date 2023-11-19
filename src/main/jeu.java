@@ -131,17 +131,6 @@ public class jeu {
                 char input = userInput.charAt(0);
                 char nextCell = p.deplacementOnMap(input, map, e);
 
-                // Utiliser la valeur de nextCell comme nécessaire
-                if (nextCell == 'O') {
-                    System.out.println("Vous avez rencontré un obstacle!");
-                } else if (nextCell == '#') {
-                    System.out.println("Vous avez rencontré un monstre!");
-                    // TODO: Ajoutez ici la logique pour combattre un monstre
-                } else if (nextCell == 'E') {
-                    System.out.println("Vous avez atteint la sortie!");
-                } else {
-                    System.out.println("Vous avez rencontré une case vide.");
-                }
             }
 
             // Afficher la carte après l'action
