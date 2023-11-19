@@ -43,52 +43,40 @@ public class jeu {
         System.out.println(" ");
         System.out.println("Menu");
         System.out.println("1. Aller au magasin d'armes");
-        System.out.println("2. Changer d'arme");
-        System.out.println("3. Quitter le jeu");
-
-        // Lire l'entrée de l'utilisateur sous forme de chaîne
-        String userInputt = scanner.next();
+        System.out.println("2. Quitter le jeu");
 
         // Vérifier si l'entrée est un chiffre (option du menu)
-        if (userInputt.matches("\\d+")) {
-            int choice = Integer.parseInt(userInputt);
-            switch (choice) {
-                case 1:
-                    // Option pour aller au magasin d'armes
-                    System.out.println("--- MAGASIN D'ARMES ---");
-                    System.out.println("Voici les armes disponibles :");
-                    store.printWeaponsList();
-                    System.out.println("Choisissez une arme :");
-                    int choixArme = scanner.nextInt();
-                    Weapon w = store.getWeapon(choixArme);
-                    p.buyWeapon(w);
-                    System.out.println("Vous avez acheté " + w.getName());
-                    System.out.println("Vous avez " + p.getMoney() + " pieces");
-                    break;
-                case 2:
-                    // Option pour changer d'arme
-                    if (p.getWeapons().size() > 1) {
-                        p.changeWeapon();
-                    } else {
-                        System.out.println("Vous n'avez pas d'arme");
-                    }
-                    break;
-                case 3:
-                    // Option pour quitter le jeu
-                    System.out.println("--- VOUS AVEZ QUITTE LE JEU ---");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Choix invalide");
-                    break;
-            }
-
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 1:
+                // Option pour aller au magasin d'armes
+                System.out.println("--- MAGASIN D'ARMES ---");
+                System.out.println("Voici les armes disponibles :");
+                store.printWeaponsList();
+                System.out.println("Choisissez une arme :");
+                int choixArme = scanner.nextInt();
+                Weapon w = store.getWeapon(choixArme);
+                p.buyWeapon(w);
+                System.out.println("Vous avez acheté " + w.getName());
+                System.out.println("Vous avez " + p.getMoney() + " pieces");
+                break;
+            case 2:
+                // Option pour quitter le jeu
+                System.out.println("--- VOUS AVEZ QUITTE LE JEU ---");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Choix invalide");
+                break;
+        }
 
         // Affichage de la map
         map.displayMap();
 
+
         // Boucle infinie, tant que le joueur n'a pas atteint la case de sortie, qui est la case E
-        while (map.playerOnExit(0,1) == false) {
+        while (p.getNextCell() != 'E') {
+
             // Menu affiché tout le temps
             System.out.println("Appuyez sur une touche (z pour haut, s pour bas, q pour gauche, d pour droite, ou 'q' pour quitter) :");
             System.out.println("Menu");
@@ -162,5 +150,4 @@ public class jeu {
 
 
     }
-}
 }
