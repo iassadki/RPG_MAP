@@ -135,34 +135,25 @@ public class Player implements ActionsPlayer {
 
         // Appelle des méthodes spécifiques en fonction du contenu de la case suivante
         handleNextCellContent(map, e, direction);
-        //return nextCell;
     }
 
-    // Nouvelle méthode pour gérer le contenu de la case suivante
+    // Méthode pour gérer le contenu de la case suivante
     private void handleNextCellContent(Map map, Entity e, char direction) {
-        //Destructible d;
         if (nextCell == 'O') {
-            //map.getMap()[playerRow][playerCol] = ' ';
-            // transformer nextCell en P/O pour afficher le joueur dans la case de l'obstacle
             Destructible o1 = new Obstacle();
-            handleObstacleCombat(map, e, o1);
-            //movePlayer(map, direction);
+            handleObstacleCombat(map, e, o1, direction);
         } else if (nextCell == '#') {
-            //map.getMap()[playerRow][playerCol] = ' ';
             Destructible m1 = new Monster();
-            handleMonsterCombat(map, e, m1);
-            //movePlayer(map, direction);
+            handleMonsterCombat(map, e, m1, direction);
         } else {
             movePlayer(map, direction);
         }
     }
 
     // Méthode pour gérer le combat contre un obstacle
-    private void handleObstacleCombat(Map map, Entity e, Destructible d) {
+    private void handleObstacleCombat(Map map, Entity e, Destructible d, char direction) {
         System.out.println("--- DETRUIRE CET OBSTACLE ---");
         System.out.println("Obstacle HP: " + d.getLife());
-
-        //Map map;
 
         while (d.getLife() > 0 && e.getCurrentHP() > 0) {
             System.out.println("Hero HP: " + e.getCurrentHP() + " " + "Obstacle HP: " + d.getLife());
@@ -199,29 +190,30 @@ public class Player implements ActionsPlayer {
         }
 
         // Afficher le résultat du combat
-        if (e.getCurrentHP() > 0) {
-            System.out.println("Vous avez détruit l'obstacle!");
+        if (d.getLife() <= 0) {
+            System.out.println("Vous avez tué le monstre!");
             map.clearCell(playerRow, playerCol); // Effacer la position actuelle du joueur
             map.placePlayer(playerRow, playerCol); // Afficher le joueur dans la nouvelle position
-        } else {
+        } else if (e.getCurrentHP() <= 0) {
             System.out.println("Vous etes mort!");
             System.exit(0);
         }
+
+        // Mettre à jour la direction après le déplacement
+        direction = movePlayer(map, direction);
     }
 
-
     // Méthode pour gérer le combat contre un monstre
-    private void handleMonsterCombat(Map map, Entity e, Destructible d) {
+    private void handleMonsterCombat(Map map, Entity e, Destructible d, char direction) {
         System.out.println("--- COMBAT CONTRE MONSTRE ---");
-        //Player p = null;
 
         boolean tourHeros = true;
 
         while (d.getLife() > 0 && e.getCurrentHP() > 0) {
-            System.out.println(this.e.getName() + " : " + e.getCurrentHP() + " " + "Monster HP: " + d.getLife());
 
             if (tourHeros) {
-                System.out.println("Que voulez vous faire ?");
+                System.out.println(this.e.getName() + " : " + e.getCurrentHP() + " " + "Monster HP: " + d.getLife());
+                System.out.println("Que voulez-vous faire ?");
                 System.out.println("1. Attaquer");
                 System.out.println("2. Attaque spéciale");
                 System.out.println("3. Fuir");
@@ -236,16 +228,15 @@ public class Player implements ActionsPlayer {
                     case 2:
                         System.out.println("--- ATTAQUE SPECIALE ---");
                         switch (this.e.getName()) {
-                            case "Elfe" -> this.e.specialAttack(this, d); // elfe.specialAttack(d);
-                            case "Mage" -> this.e.specialAttack(this, d); // mage.specialAttack(d);
-                            case "Warrior" -> this.e.specialAttack(this, d); // warrior.specialAttack(d);
+                            case "Elfe" -> this.e.specialAttack(this, d);
+                            case "Mage" -> this.e.specialAttack(this, d);
+                            case "Warrior" -> this.e.specialAttack(this, d);
                         }
-                        //d.hit(this.getWeapons().get(0).getDamage());
                         break;
                     case 3:
                         System.out.println("--- FUITE ---");
-                        // Gerer la fuite du Player du combat
-                        //movePlayer(map, direction);
+                        // Gérer la fuite du joueur du combat
+                        // movePlayer(map, direction);
                         break;
                     default:
                         System.out.println("Choix invalide");
@@ -255,24 +246,22 @@ public class Player implements ActionsPlayer {
 
             // Afficher le résultat du combat
             if (d.getLife() <= 0) {
-                System.out.println("Vous avez vaincu le monstre!");
-                //char currentCell = map.getMap()[playerRow][playerCol];
-                // Effacer la position actuelle
-                //map.clearCell(playerRow - 1, playerCol);
-
-
+                System.out.println("Vous avez détruit l'obstacle !");
+                map.clearCell(playerRow, playerCol); // Effacer la position actuelle du joueur
+                map.placePlayer(playerRow, playerCol); // Afficher le joueur dans la nouvelle position
             } else if (e.getCurrentHP() <= 0) {
-                System.out.println("Vous êtes mort!");
-                System.out.println(e.getCurrentHP());
+                System.out.println("Vous etes mort!");
                 System.exit(0);
             }
+
+            // Mettre à jour la direction après le déplacement
             tourHeros = !tourHeros; // Inverser la valeur de tourHeros
         }
+        direction = movePlayer(map, direction);
     }
 
-
     // Méthode pour déplacer le joueur
-    private void movePlayer(Map map, char direction) {
+    private char movePlayer(Map map, char direction) {
         // Stocker la valeur actuelle de la cellule
         char currentCell = map.getMap()[playerRow][playerCol];
 
@@ -282,26 +271,48 @@ public class Player implements ActionsPlayer {
         // Mettre à jour la nouvelle position
         switch (direction) {
             case 'z':
-                playerRow--;
+                if (playerRow > 0) {
+                    playerRow--;
+                } else {
+                    System.out.println("Vous ne pouvez pas sortir de la limite supérieure de la carte.");
+                    return direction;  // Ne pas modifier la direction si le déplacement est impossible
+                }
                 break;
             case 's':
-                playerRow++;
+                if (playerRow < 5) {
+                    playerRow++;
+                } else {
+                    System.out.println("Vous ne pouvez pas sortir de la limite inférieure de la carte.");
+                    return direction;
+                }
                 break;
             case 'q':
-                playerCol--;
+                if (playerCol > 0) {
+                    playerCol--;
+                } else {
+                    System.out.println("Vous ne pouvez pas sortir de la limite gauche de la carte.");
+                    return direction;
+                }
                 break;
             case 'd':
-                playerCol++;
+                if (playerCol < 5) {
+                    playerCol++;
+                } else {
+                    System.out.println("Vous ne pouvez pas sortir de la limite droite de la carte.");
+                    return direction;
+                }
                 break;
+            default:
+                System.out.println("Commande invalide.");
+                return direction;
         }
 
         // Vérifier si la nouvelle position contient un obstacle
-        if (currentCell == 'O') {
-            map.getMap()[playerRow][playerCol] = 'P';
-        } else {
-            map.getMap()[playerRow][playerCol] = 'P';
-        }
+        map.getMap()[playerRow][playerCol] = 'P';
+
+        return direction;
     }
+
 
     @Override
     public void characterChoice() {
@@ -336,20 +347,6 @@ public class Player implements ActionsPlayer {
                 System.out.println("Choix invalide");
                 break;
         }
-    }
-
-
-    @Override
-    public void attack(Destructible d) {
-        // TODO Auto-generated method stub
-        // si c'est une instance de monstre, on affiche le message monstre
-        if (d instanceof Monster) {
-            System.out.println("monstre");
-        } else if (d instanceof Obstacle) {
-            System.out.println("Vous avez frappé un obstacle");
-        }
-
-        d.life -= this.getWeapons().get(0).getDamage();
     }
 }
 

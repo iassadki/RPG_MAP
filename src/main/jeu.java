@@ -48,12 +48,11 @@ public class jeu {
                 break;
             default:
                 System.out.println("Choix invalide");
-                break;
+                //break;
         }
 
         // Affichage de la map
         map.displayMap();
-
 
         // Boucle infinie, tant que le joueur n'a pas atteint la case de sortie, qui est la case E
         while (p.getNextCell() != 'E') {
@@ -106,7 +105,7 @@ public class jeu {
                         break;
                     default:
                         System.out.println("Choix invalide");
-                        break;
+                        //break;
                 }
             } else {
                 // L'utilisateur a saisi un caractère zqsd pour se déplacer

@@ -11,6 +11,4 @@ public interface ActionsPlayer {
     void changeWeapon();
     void deplacementOnMap(char direction, Map map, Entity e);
     void characterChoice();
-    void attack(Destructible d);
-
 }
