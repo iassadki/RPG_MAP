@@ -17,6 +17,7 @@ public class Warrior extends Entity {
 
     public void specialAttack(Player player, Destructible d) {
         if (specialAttackCount > 0) {
+            // Pour le Warrior, on multiplie les dégâts de l'arme par 3
             d.hit(player.getWeapons().get(0).getDamage() * 3);
             specialAttackCount--;
         } else {

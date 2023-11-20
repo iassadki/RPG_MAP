@@ -19,6 +19,7 @@ public class Elfe extends Entity {
 
     public void specialAttack(Player player, Destructible d) {
         if (specialAttackCount > 0) {
+            // Pour l'Elfe, si l'attaque spéciale est utilisée, on lance un nombre aléatoire entre 3 et 6
             Random random = new Random();
             int nombreAleatoire = random.nextInt(4) + 3;
             d.hit(player.getWeapons().get(0).getDamage() * nombreAleatoire);

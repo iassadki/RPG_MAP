@@ -19,6 +19,7 @@ public class Mage extends Entity {
 
     public void specialAttack(Player player, Destructible d) {
         if (specialAttackCount > 0) {
+            // Pour le Mage, si l'attaque spéciale est utilisée, on lance un nombre aléatoire entre 2 et 5
             Random random = new Random();
             int nombreAleatoire = random.nextInt(4) + 2;
             d.hit(p.getWeapons().get(0).getDamage() * nombreAleatoire);
