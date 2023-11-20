@@ -58,7 +58,7 @@ public class jeu {
         while (p.getNextCell() != 'E') {
 
             // Menu affiché tout le temps
-            System.out.println("Appuyez sur une touche (z pour haut, s pour bas, q pour gauche, d pour droite, ou 'q' pour quitter) :");
+            System.out.println("Appuyez sur une touche (z pour haut, s pour bas, q pour gauche, d pour droite, ou 'q' pour gauche) :");
             System.out.println("Menu");
             System.out.println("1. Aller au magasin d'armes");
             System.out.println("2. Changer d'arme");
