@@ -313,7 +313,6 @@ public class Player implements ActionsPlayer {
         return direction;
     }
 
-
     @Override
     public void characterChoice() {
         // Choix du personnage avec les chiffres du clavier
@@ -345,6 +344,7 @@ public class Player implements ActionsPlayer {
                 break;
             default:
                 System.out.println("Choix invalide");
+                System.exit(0);
                 break;
         }
     }

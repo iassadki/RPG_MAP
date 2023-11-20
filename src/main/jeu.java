@@ -48,7 +48,8 @@ public class jeu {
                 break;
             default:
                 System.out.println("Choix invalide");
-                //break;
+                System.exit(0);
+                break;
         }
 
         // Affichage de la map
@@ -66,12 +67,6 @@ public class jeu {
 
             // Lire l'entrée de l'utilisateur sous forme de chaîne
             String userInput = scanner.next();
-
-            // Vérifier si l'utilisateur souhaite quitter
-            if (userInput.equals("k")) {
-                System.out.println("Au revoir !");
-                break;
-            }
 
             // Vérifier si l'entrée est un chiffre (option du menu)
             if (userInput.matches("\\d+")) {
@@ -104,20 +99,20 @@ public class jeu {
                         System.exit(0);
                         break;
                     default:
+                        // reprendre la boucle si l'utilisateur n'a pas saisi un chiffre entre 1 et 3
                         System.out.println("Choix invalide");
-                        //break;
+                        System.exit(0);
+                        break;
                 }
             } else {
                 // L'utilisateur a saisi un caractère zqsd pour se déplacer
                 char input = userInput.charAt(0);
                 p.deplacementOnMap(input, map, e);
-
             }
 
             // Afficher la carte après l'action
             map.displayMap();
         }
         System.out.println("Vous avez fini le jeu !");
-
     }
 }
