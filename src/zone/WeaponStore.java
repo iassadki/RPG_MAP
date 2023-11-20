@@ -11,10 +11,6 @@ public class WeaponStore {
 
     private ArrayList<Weapon> weaponsList;
 
-    // Pour un elfe, on ne peut pas fuir le combat
-    // Pour un sorcier, on peut fuir le combat
-    // Pour un guerrier, on peut fuir le combat
-
     public WeaponStore() {
         this.weaponsList = new ArrayList<Weapon>();
         this.weaponsList.add(new Bow());

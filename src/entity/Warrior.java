@@ -20,9 +20,8 @@ public class Warrior extends Entity {
             d.hit(player.getWeapons().get(0).getDamage() * 3);
             specialAttackCount--;
         } else {
-            System.out.println("You don't have enough special attack count.");
+            System.out.println("Vous n'avez pas assez de points d'attaque spéciale.");
         }
-        //System.out.println("Warrior special attack");
     }
 
 

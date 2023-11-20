@@ -24,7 +24,7 @@ public class Mage extends Entity {
             d.hit(p.getWeapons().get(0).getDamage() * nombreAleatoire);
             specialAttackCount--;
         } else {
-            System.out.println("You don't have enough special attack count.");
+            System.out.println("Vous n'avez pas assez de points d'attaque spéciale.");
         }
     }
 }

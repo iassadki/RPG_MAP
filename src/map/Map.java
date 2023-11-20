@@ -9,7 +9,6 @@ public class Map {
     // Carte 6X6
 
     private char[][] map;
-    private char nextCell;  // Nouvelle variable pour stocker la valeur de nextCell
 
     public Map() {
         map = new char[6][6];
@@ -39,10 +38,12 @@ public class Map {
         map[playerRow][playerCol] = 'P'; // P pour joueur
     }
 
+    // Effacer la cellulle
     public void clearCell(int row, int col) {
         map[row][col] = ' ';
     }
 
+    // Placer le joueur dans la cellule
     public void placePlayer(int row, int col) {
         map[row][col] = 'P';
     }
@@ -62,10 +63,6 @@ public class Map {
 
     public char[][] getMap() {
         return map;
-    }
-
-    public void setMap(char[][] map) {
-        this.map = map;
     }
 
 }

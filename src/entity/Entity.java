@@ -9,7 +9,6 @@ public class Entity {
     private double HP;
     private int specialAttackCount;
     Player p;
-    //private Destructible d;
 
     public Entity(String name) {
         this.name = name;
@@ -44,8 +43,4 @@ public class Entity {
     public void specialAttack(Player p, Destructible d) {
     }
 
-    // Implémentation par défaut de getEntityName
-    public String getEntityName() {
-        return "Entity";
-    }
 }

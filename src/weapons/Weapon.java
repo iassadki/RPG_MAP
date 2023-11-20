@@ -28,5 +28,4 @@ public abstract class Weapon {
         return this.name + " : price = " + this.price + " $ ; damage = " + this.damage;
     }
 
-    // public abstract String ascii_art();
 }

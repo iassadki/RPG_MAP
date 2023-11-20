@@ -92,7 +92,7 @@ public class Player implements ActionsPlayer {
 
     @Override
     public void deplacementOnMap(char direction, Map map, Entity e) {
-        // Condition pour vérifier si la case suivante est vide ou remplie
+        // Stockage de la variable nextCell
         nextCell = ' ';
 
         switch (direction) {
@@ -141,10 +141,10 @@ public class Player implements ActionsPlayer {
     private void handleNextCellContent(Map map, Entity e, char direction) {
         if (nextCell == 'O') {
             Destructible o1 = new Obstacle();
-            handleObstacleCombat(map, e, o1, direction);
+            handleObstacleCombat(map, e, o1, direction); // Appel de la methode handleObstacleCombat
         } else if (nextCell == '#') {
             Destructible m1 = new Monster();
-            handleMonsterCombat(map, e, m1, direction);
+            handleMonsterCombat(map, e, m1, direction); // Appel de la methode handleMonsterCombat
         } else {
             movePlayer(map, direction);
         }
@@ -176,12 +176,9 @@ public class Player implements ActionsPlayer {
                         case "Mage" -> this.e.specialAttack(this, d); // mage.specialAttack(d);
                         case "Warrior" -> this.e.specialAttack(this, d); // warrior.specialAttack(d);
                     }
-                    //d.hit(this.getWeapons().get(0).getDamage());
                     break;
                 case 3:
                     System.out.println("--- FUITE ---");
-                    // Gerer la fuite du Player du combat
-                    //movePlayer(map, direction);
                     break;
                 default:
                     System.out.println("Choix invalide");
@@ -191,15 +188,16 @@ public class Player implements ActionsPlayer {
 
         // Afficher le résultat du combat
         if (d.getLife() <= 0) {
-            System.out.println("Vous avez tué le monstre!");
+            System.out.println("Vous avez detruit l'obstacle !");
             map.clearCell(playerRow, playerCol); // Effacer la position actuelle du joueur
             map.placePlayer(playerRow, playerCol); // Afficher le joueur dans la nouvelle position
+            this.money += 10; // Ajouter 10 pieces au Player
         } else if (e.getCurrentHP() <= 0) {
             System.out.println("Vous etes mort!");
             System.exit(0);
         }
 
-        // Mettre à jour la direction après le déplacement
+        // Mettre à jour la direction après le déplacement, avec la methode movePlayer
         direction = movePlayer(map, direction);
     }
 
@@ -235,8 +233,6 @@ public class Player implements ActionsPlayer {
                         break;
                     case 3:
                         System.out.println("--- FUITE ---");
-                        // Gérer la fuite du joueur du combat
-                        // movePlayer(map, direction);
                         break;
                     default:
                         System.out.println("Choix invalide");
@@ -246,25 +242,23 @@ public class Player implements ActionsPlayer {
 
             // Afficher le résultat du combat
             if (d.getLife() <= 0) {
-                System.out.println("Vous avez détruit l'obstacle !");
+                System.out.println("Vous avez tué le monstre !");
                 map.clearCell(playerRow, playerCol); // Effacer la position actuelle du joueur
                 map.placePlayer(playerRow, playerCol); // Afficher le joueur dans la nouvelle position
+                this.money += 20; // Ajouter 20 pieces au Player
             } else if (e.getCurrentHP() <= 0) {
                 System.out.println("Vous etes mort!");
                 System.exit(0);
             }
 
-            // Mettre à jour la direction après le déplacement
             tourHeros = !tourHeros; // Inverser la valeur de tourHeros
         }
+        // Mettre à jour la direction après le déplacement, avec la methode movePlayer
         direction = movePlayer(map, direction);
     }
 
     // Méthode pour déplacer le joueur
     private char movePlayer(Map map, char direction) {
-        // Stocker la valeur actuelle de la cellule
-        char currentCell = map.getMap()[playerRow][playerCol];
-
         // Effacer la position actuelle
         map.getMap()[playerRow][playerCol] = ' ';
 
@@ -275,7 +269,7 @@ public class Player implements ActionsPlayer {
                     playerRow--;
                 } else {
                     System.out.println("Vous ne pouvez pas sortir de la limite supérieure de la carte.");
-                    return direction;  // Ne pas modifier la direction si le déplacement est impossible
+                    return direction;
                 }
                 break;
             case 's':
@@ -307,7 +301,7 @@ public class Player implements ActionsPlayer {
                 return direction;
         }
 
-        // Vérifier si la nouvelle position contient un obstacle
+        // Placer le joueur dans la nouvelle position
         map.getMap()[playerRow][playerCol] = 'P';
 
         return direction;
@@ -325,19 +319,16 @@ public class Player implements ActionsPlayer {
 
         switch (choixPersonnage) {
             case 1:
-                // Option pour choisir le personnage Elfe
                 this.e = new Elfe();
                 this.e.setName("Elfe");
                 System.out.println("Vous avez choisi la classe " + this.e.getName());
                 break;
             case 2:
-                // Option pour choisir le personnage Mage
                 this.e = new Mage();
                 this.e.setName("Mage");
                 System.out.println("Vous avez choisi la classe " + this.e.getName());
                 break;
             case 3:
-                // Option pour choisir le personnage Warrior
                 this.e = new Warrior();
                 this.e.setName("Warrior");
                 System.out.println("Vous avez choisi la classe " + this.e.getName());

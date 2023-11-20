@@ -55,12 +55,12 @@ public class jeu {
         // Affichage de la map
         map.displayMap();
 
-        // Boucle infinie, tant que le joueur n'a pas atteint la case de sortie, qui est la case E
+        // Boucle infinie, tant que le joueur n'a pas atteint la case de sortie, qui est la case 'E'
         while (p.getNextCell() != 'E') {
 
             // Menu affiché tout le temps
             System.out.println("Appuyez sur une touche (z pour haut, s pour bas, q pour gauche, d pour droite, ou 'q' pour gauche) :");
-            System.out.println("Menu");
+            System.out.println("Menu -- Vous avez " + p.getMoney() + " pieces");
             System.out.println("1. Aller au magasin d'armes");
             System.out.println("2. Changer d'arme");
             System.out.println("3. Quitter le jeu");
@@ -113,6 +113,8 @@ public class jeu {
             // Afficher la carte après l'action
             map.displayMap();
         }
+
+        // Fin du jeu
         System.out.println("Vous avez fini le jeu !");
     }
 }

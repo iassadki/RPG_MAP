@@ -9,7 +9,7 @@ public class Destructible {
         this.life = hp;
     }
 
-    public Destructible() { } // constructeur vide
+    public Destructible() { }
 
     public double getLife() {
         return this.life;

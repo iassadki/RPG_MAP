@@ -2,7 +2,7 @@ package destructible;
 
 public class Obstacle extends Destructible {
 
-    public static final double HP = 100.; // Accessible via Obstacle.HP
+    public static final double HP = 100.;
 
     public Obstacle() {
         super(HP);
